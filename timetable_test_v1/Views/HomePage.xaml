@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm ="clr-namespace:timetable_test_v1.ViewModels"
+             x:Class="timetable_test_v1.Views.HomePage"
+             x:DataType="vm:HomePageVM"
+             Title="HomePage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <CarouselView ItemsSource="{Binding KioskItems}"
+                          IndicatorView="{x:Reference indicatorView}"
+                          CurrentItem="{Binding CurrentItem}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="ImageButton">
+                        <Frame HeightRequest="200" 
+                               Padding="0"
+                               CornerRadius="10"
+                               BorderColor="DarkGray"
+                               BackgroundColor="Transparent">
+                            <ImageButton Source="{Binding Source}" Command="{Binding Command}"
+                                         Aspect="AspectFill"/>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="indicatorView" 
+                           IndicatorColor="DarkGray" 
+                           SelectedIndicatorColor="Black" 
+                           HorizontalOptions="Center"/>
+
+            <Frame BackgroundColor="Transparent" BorderColor="DimGray">
+                <StackLayout>
+                    <Label Text="目前教室數量" />
+                    <Label Text="{Binding ClassroomQuantity}" FontSize="25" FontAttributes="Bold"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="DimGray">
+                <StackLayout>
+                    <Label Text="目前建築數量" />
+                    <Label Text="{Binding BuildingQuantity}" FontSize="25" FontAttributes="Bold"/>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

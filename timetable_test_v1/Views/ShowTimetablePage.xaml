@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:selector="clr-namespace:timetable_test_v1.Models"
+             xmlns:vm="clr-namespace:timetable_test_v1.ViewModels"
+             x:Class="timetable_test_v1.Views.ShowTimetablePage"
+             x:DataType="vm:ShowTimetablePageVM"
+             Title="{Binding Classroom_Name}">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="NoClass">
+            <StackLayout Spacing="10">
+                <Grid Padding="5" Margin="0,0,0, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".2*"/>
+                        <ColumnDefinition Width=".8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="dotnet_bot.png" 
+                               Aspect="AspectFill" 
+                               HeightRequest="95" 
+                               WidthRequest="80"/>
+                    <VerticalStackLayout VerticalOptions="Center"
+                            Padding="30,0,0,0"  
+                            Spacing="3" 
+                            Grid.Column="1">
+                        <Label x:Name="courseLb" Text="{Binding Course}"
+                                   Grid.Column="1"
+                                   FontAttributes="Bold"
+                                   FontSize="20"/>
+                        <Label x:Name="statusLb" Text="{Binding Status, StringFormat='教室狀態: {0}'}" 
+                                   Grid.Column="1"
+                                   FontSize="15">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference courseLb}, Path=Text}" Value="Empty">
+                                    <Setter Property="Label.TextColor" Value="Red"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Grid>
+            </StackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="HaveClass">
+            <StackLayout Spacing="10">
+                <Grid Padding="5" Margin="0,0,0, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".2*"/>
+                        <ColumnDefinition Width=".8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="dotnet_bot.png" 
+                               Aspect="AspectFill" 
+                               HeightRequest="95" 
+                               WidthRequest="80"/>
+                    <VerticalStackLayout VerticalOptions="Center"
+                            Padding="30,0,0,0"  
+                            Spacing="3" 
+                            Grid.Column="1">
+                        <Label x:Name="courseLb" Text="{Binding Course}"
+                                   Grid.Column="1"
+                                   FontAttributes="Bold"
+                                   FontSize="20"/>
+                        <Label Text="{Binding Instructor}" 
+                                   Grid.Column="1"
+                                   FontSize="15"/>
+                        <Label Text="{Binding Classname}" 
+                                   Grid.Column="1"
+                                   FontSize="15"/>
+                        <Label x:Name="statusLb" Text="{Binding Status, StringFormat='教室狀態: {0}'}" 
+                                   Grid.Column="1"
+                                   FontSize="15">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference statusLb}, Path=Text}" Value="教室狀態: Class Time">
+                                    <Setter Property="Label.TextColor" Value="Blue"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Grid>
+            </StackLayout>
+        </DataTemplate>
+        <selector:TimetableDataTemplateSelector x:Key="TimetableDataTemplate"
+                                                ClassroomDontHaveClass="{StaticResource NoClass}"
+                                                ClassroomHaveClass="{StaticResource HaveClass}"/>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="20">
+            <Frame Padding="20,0,20,0" 
+                   CornerRadius="45"  
+                   BackgroundColor="Transparent" 
+                   BorderColor="DarkGray">
+                <HorizontalStackLayout VerticalOptions="Center" 
+                                       HorizontalOptions="Center">
+                    <Label Text="星期 : " FontSize="18" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <Picker Title="choose a Date" 
+                            
+                            HorizontalTextAlignment="Center"
+                            FontSize="15"
+                            WidthRequest="300"
+                            ItemsSource="{Binding Day_of_week}"
+                            SelectedItem="{Binding SelectedDate}"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <CollectionView x:Name="TimetableCollectionView" ItemsSource="{Binding TimetableList}" 
+                            ItemTemplate="{StaticResource TimetableDataTemplate}"
+                            SelectedItems="{Binding SelectedTimetable}"
+                            Header="課表"
+                            VerticalOptions="FillAndExpand"
+                            EmptyView="請選擇 Date"
+                            SelectionMode="Multiple"
+                            SelectionChangedCommand="{Binding Course_On_TappedCommand}"/>
+                            <!--SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference TimetableCollectionView}}"-->
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
+    

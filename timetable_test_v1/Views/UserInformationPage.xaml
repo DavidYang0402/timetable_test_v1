@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm ="clr-namespace:timetable_test_v1.ViewModels"
+             x:Class="timetable_test_v1.Views.UserInformationPage"
+             x:DataType="vm:UserInfoVM"
+             Title="UserInformationPage">
+
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Start" Padding="10" Spacing="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".3*"/>
+                    <ColumnDefinition Width=".7*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Frame CornerRadius="50" HeightRequest="80" WidthRequest="80" BorderColor="Black" >
+                    <Image Source="dotnet_bot.png"  Aspect="AspectFill"/>
+                </Frame>
+
+                <VerticalStackLayout Grid.Column="1"
+                    Padding="10">
+                    <Label Text="陳定宏" FontSize="25" FontAttributes="Bold"/>
+                    <Label Text="admin@admin.com" FontSize="15" TextColor="DarkGray"/>
+                </VerticalStackLayout>
+            </Grid>
+            <Button Text="Log Out"
+                    ImageSource="signout.png"
+                    ContentLayout="Left, 20"
+                    Command="{Binding LogoutCommand}"
+                    TextColor="Black"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    BackgroundColor="AliceBlue"/>
+        </VerticalStackLayout>
+        
+        
+    </ScrollView>
+</ContentPage>

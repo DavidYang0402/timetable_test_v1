@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm ="clr-namespace:timetable_test_v1.ViewModels"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+             x:Class="timetable_test_v1.Views.SearchPage"
+             x:DataType="vm:SearchPageVM"
+             Title="">
+
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Start">
+            <SearchBar Placeholder="Search a Course or Teacher"
+                       FontSize="15"
+                       BackgroundColor="CornflowerBlue"
+                       TextColor="Black"
+                       CancelButtonColor="Red"/>
+            <VerticalStackLayout VerticalOptions="Center"
+                                 Spacing="10" Padding="10">
+                <Frame Padding="10" BackgroundColor="Transparent" BorderColor="DarkGray">
+                    <StackLayout>
+                        <Picker x:Name="BuildingPicker" 
+                            Title="Select a Building"
+                            SelectedItem="{Binding SelectedBuilding}"
+                            ItemsSource="{Binding Buildings}"
+                            HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding SelectedBuilding, StringFormat='Building : {0}'}" Margin="10,0,0,0"/>
+                    </StackLayout>              
+                </Frame>
+
+                <Frame Padding="10" BackgroundColor="Transparent" BorderColor="DarkGray">
+                    <StackLayout>
+                        <Picker x:Name="ClassroomPicker" 
+                            Title="Select a Classroom"
+                            SelectedItem="{Binding SelectedClassroom}"
+                            ItemsSource="{Binding Classrooms}"
+                            HorizontalTextAlignment="Center"/>  
+                        <Label Text="{Binding SelectedClassroom, StringFormat='Classroom : {0}'}" Margin="10,0,0,0"/>
+                    </StackLayout>
+                </Frame>
+                <VerticalStackLayout>
+                    <Button Text="Search" Command="{Binding NavigateCommand}"/>
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+                </VerticalStackLayout>
+            
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>
